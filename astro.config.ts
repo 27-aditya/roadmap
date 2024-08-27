@@ -6,43 +6,39 @@ import remarkCollapse from "remark-collapse";
 import sitemap from "@astrojs/sitemap";
 import { SITE } from "./src/config";
 
+import vercel from "@astrojs/vercel/serverless";
+
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
-  integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
-    react(),
-    sitemap(),
-  ],
+  integrations: [tailwind({
+    applyBaseStyles: false
+  }), react(), sitemap()],
   markdown: {
-    remarkPlugins: [
-      remarkToc,
-      [
-        remarkCollapse,
-        {
-          test: "Table of contents",
-        },
-      ],
-    ],
+    remarkPlugins: [remarkToc, [remarkCollapse, {
+      test: "Table of contents"
+    }]],
     shikiConfig: {
       // For more themes, visit https://shiki.style/themes
-      themes: { light: "min-light", dark: "night-owl" },
-      wrap: true,
-    },
+      themes: {
+        light: "min-light",
+        dark: "night-owl"
+      },
+      wrap: true
+    }
   },
   vite: {
     optimizeDeps: {
-      exclude: ["@resvg/resvg-js"],
-    },
+      exclude: ["@resvg/resvg-js"]
+    }
   },
   scopedStyleStrategy: "where",
   experimental: {
-    contentLayer: true,
+    contentLayer: true
   },
+  output: "server",
+  adapter: vercel()
 });
 function github(): false | import("astro").AstroIntegration | (false | import("astro").AstroIntegration | null | undefined)[] | null | undefined {
   throw new Error("Function not implemented.");
 }
-
