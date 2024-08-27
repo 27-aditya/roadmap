@@ -5,7 +5,7 @@ import PostDetails from "@layouts/PostDetails.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import getPageNumbers from "@utils/getPageNumbers";
 import getPagination from "@utils/getPagination";
-
+export const prerender = true;
 export interface Props {
   post: CollectionEntry<"blog">;
 }
@@ -39,3 +39,5 @@ const pagination = getPagination({
 ---
 
 {post ? <PostDetails post={post} /> : <Posts {...pagination} />}
+
+
